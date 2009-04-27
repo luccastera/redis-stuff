@@ -1,0 +1,7 @@
+check process redis
+        with pidfile /tmp/redis.pid
+        start program = "/usr/bin/redis-server /etc/redis.conf"
+        stop program = "/bin/echo SHUTDOWN | nc localhost 6379"
+        if failed host 127.0.0.1 port 6379 then restart
+        if 5 restarts within 5 cycles then timeout
+
